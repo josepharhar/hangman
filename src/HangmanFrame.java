@@ -81,25 +81,41 @@ public class HangmanFrame extends JFrame {
 
         update();
     }
+    
+    private void win() {
+        JOptionPane.showMessageDialog(this, "You Won!");
+        
+        //go back to main menu
+        remove(gamePanel);
+        add(mainMenuPanel);
+        mainMenuPanel.validate();
+        mainMenuPanel.repaint();
+    }
+    
+    private void lose() {
+        JOptionPane.showMessageDialog(this, "You Lost! The secret word was: " + theWord.getSecretWord());
+        
+        //go back to main menu
+        remove(gamePanel);
+        add(mainMenuPanel);
+        mainMenuPanel.validate();
+        mainMenuPanel.repaint();
+    }
 
     private void update() {
+        // clear the textbox
+        textbox.setText("");
+
+        // update labels
+        wordLabel.setText(theWord.getFormattedWord());
+        guessedLabel.setText(theWord.getFormattedGuesses());
+
+        hangmanPanel.set();
+        
         if (theWord.isWin()) {
-            JOptionPane.showMessageDialog(this, "You Won!");
-        }
-
-        if (theWord.getNumFails() >= MAX_FAILS) {
-            // LOSE THE GAME!!!
-            System.out.println("you lost!");
-            JOptionPane.showMessageDialog(this, "You Lost!");
-        } else {
-            // clear the textbox
-            textbox.setText("");
-
-            // update labels
-            wordLabel.setText(theWord.getFormattedWord());
-            guessedLabel.setText(theWord.getFormattedGuesses());
-
-            hangmanPanel.set();
+            win();
+        } else if (theWord.getNumFails() >= MAX_FAILS) {
+            lose();
         }
     }
 

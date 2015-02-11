@@ -75,4 +75,8 @@ public class Word {
 
         return output;
     }
+    
+    public String getSecretWord() {
+        return word;
+    }
 }
